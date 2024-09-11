@@ -5,3 +5,18 @@ Content-Type: application/json
     "title": "Goal 1",
     "desiredWeeklyFrequency": 2
 }
+
+###
+GET http://localhost:3333/pending-goals
+Content-Type: application/json
+
+{
+}
+
+###
+POST http://localhost:3333/completions
+Content-Type: application/json
+
+{
+    "goalId": "n6z3fdkuqkqvvz1mkj7i5xnc"
+}
