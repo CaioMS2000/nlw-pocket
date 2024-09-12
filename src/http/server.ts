@@ -11,6 +11,15 @@ import { getWeekSummaryRoute } from "./routes/get-week-summary";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
+app.register(import("@fastify/cors"), {
+	origin: "*",
+});
+
+// import fastifyCors from "@fastify/cors"
+// app.register(fastifyCors, {
+// 	origin: "*",
+// });
+
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
