@@ -1,10 +1,12 @@
 import { select } from "@inquirer/prompts";
 import { createGoal } from "./function/create-goal";
 import { CommandManager } from "./command";
+import { markGoal } from "./function/mark-goal";
 
 const app = CommandManager();
 
 app.register(createGoal);
+app.register(markGoal);
 
 async function BOOT() {
 	while (true) {
@@ -12,16 +14,15 @@ async function BOOT() {
 			message: "Menu >",
 			choices: [
 				{ name: "Cadastrar meta", value: "createGoal" },
+				{ name: "Marcar metas", value: "markGoalAsChecked" },
 				{ name: "Sair", value: "exit" },
 			],
 		});
 
-        console.log(option);
-
 		if (option === "exit") break;
 
 		const fn = app.getCommand(option);
-        await fn()
+		await fn();
 	}
 }
 
