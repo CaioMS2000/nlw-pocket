@@ -1,0 +1,3 @@
+function BOOT(){}
+
+BOOT()
