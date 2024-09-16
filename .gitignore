@@ -82,6 +82,7 @@ typings/
 
 # VSCode specific files
 .vscode
+*.code-workspace
 
 # macOS specific files
 .DS_Store
