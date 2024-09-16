@@ -1,34 +1,36 @@
-import { checkbox } from "@inquirer/prompts";
-import { GoalsManager } from "../app";
+import { checkbox } from '@inquirer/prompts'
+import { GoalsManager } from '../app'
 
 export const markGoal = async () => {
-	const allMetas = GoalsManager.getGoals()
+    const allGoals = GoalsManager.getGoals()
 
-	if (allMetas.length === 0) {
-		console.log("Nenhuma meta cadastrada");
-		return;
-	}
-	
-	const selectedGoals = await checkbox({
-		message: "",
-		choices: allMetas.map((goal) => ({
-			value: goal.name,
-			checked: goal.check,
-		})),
-		instructions: false,
-	});
+    if (allGoals.length === 0) {
+        console.log('Nenhuma meta cadastrada')
+        return
+    }
 
-	for (const goal of allMetas) {
-		goal.check = false;
-	}
+    const selectedGoals = await checkbox({
+        message: '',
+        choices: allGoals.map(goal => ({
+            value: goal.name,
+            checked: goal.checked,
+        })),
+        instructions: false,
+    })
 
-	for (const selectedGoal of selectedGoals) {
-		const goal = allMetas.find(
-			(goal) => goal.name === selectedGoal
-		);
+    for (const goal of allGoals) {
+        const isSelected = selectedGoals.includes(goal.name)
+        const wasChecked = goal.checked
 
-		if (goal) {
-			goal.check = true;
-		}
-	}
-};
+        if (isSelected && !wasChecked) {
+            GoalsManager.editGoal({ name: goal.name, checked: true })
+            continue
+        }
+
+        if(!isSelected && wasChecked) {
+            GoalsManager.editGoal({ name: goal.name, checked: false })
+        }
+    }
+
+    console.clear()
+}
